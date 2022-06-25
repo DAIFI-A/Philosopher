@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/25 02:16:28 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/06/25 02:24:38 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,17 @@ void	*rout(void *data)
 	puts("take right fork");
 	pthread_mutex_lock(&dat->left_fork);
 	puts("take left fork");
-	//pthread_mutex_lock(dat->share.mutex);
 	puts("eating");
 	pthread_mutex_unlock(&dat->right_fork);
 	pthread_mutex_unlock(&dat->left_fork);
-	//pthread_mutex_unlock(dat->share.mutex);
 	return NULL;
 }
 
 void	thread_creation(t_philo *data, int res, int i)
 {
 	data->share.threads = malloc(sizeof(data->share.number_of_philosophers));
-	pthread_mutex_init(&data->right_fork, NULL);
-	pthread_mutex_init(&data->left_fork, NULL);
-	//pthread_mutex_init(data->share.mutex, NULL);
+	// pthread_mutex_init(&data->right_fork, NULL);
+	// pthread_mutex_init(&data->left_fork, NULL);
 	if (data->id % 2 == res)
 	{
 		pthread_create(&data->share.threads[i], NULL, &rout, &data);

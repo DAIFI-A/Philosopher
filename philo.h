@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/24 23:08:35 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/06/25 20:01:49 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct share
 
 typedef struct s_philo
 {
-	t_share			share;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	right_fork;
+	t_share			*share;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 	int				id;
 	long			last_meal;
 }		t_philo;
@@ -47,7 +47,7 @@ void	over_flow(char **av);
 int	ft_atoi(const char *str);
 void	thread_creation(t_philo *data, int res, int i);
 int	mutex(t_share *data);
-int philo_init(t_philo *philo);
+t_philo *philo_init(t_share *share);
 int passing_args(int ac, char **argv);
 int make_philo(t_philo *data);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/25 20:01:49 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/06/27 19:09:28 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include<unistd.h>
 # include<stdio.h>
 # include<stdlib.h>
+# include<sys/time.h>
 
 typedef struct share
 {
@@ -25,8 +26,10 @@ typedef struct share
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_times_each_philosopher_must_eat;
-	pthread_t		*threads;
-	pthread_mutex_t	*mutex;
+	unsigned int	start_t;
+	unsigned int	last_eat_time;
+	pthread_mutex_t	mutex_msg;
+	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	*fork;
 }		t_share;
 
@@ -39,16 +42,21 @@ typedef struct s_philo
 	long			last_meal;
 }		t_philo;
 
-int		ft_isdigit(int a);
-char	*ft_error(char **str);
-void	check_args(int ac, char *argv[]);
-int		is_digit(char	**av);
-void	over_flow(char **av);
-int	ft_atoi(const char *str);
-void	thread_creation(t_philo *data, int res, int i);
-int	mutex(t_share *data);
-t_philo *philo_init(t_share *share);
-int passing_args(int ac, char **argv);
-int make_philo(t_philo *data);
+void			over_flow(char **av);
+void			check_args(int ac, char *argv[]);
+void			ft_usleep(unsigned int time_in_ms);
+void			tasks(t_philo *philo);
+void			right_handed(t_philo *p);
+void			left_handed(t_philo *p);
+void			eat_task(t_philo *philo);
+char			*ft_error(char **str);
+int				ft_isdigit(int a);
+int				is_digit(char **av);
+int				ft_atoi(const char *str);
+int				mutex_fork_init(t_share *data);
+int 			passing_args(int ac, char **argv);
+int 			make_philo(t_philo *data);
+unsigned int	ft_get_time(void);
+t_philo 		*philo_init(t_share *share);
 
 #endif

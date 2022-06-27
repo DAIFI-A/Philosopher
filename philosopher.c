@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/25 22:35:23 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/06/27 19:09:44 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,13 @@ t_philo *philo_init(t_share	*share)
 	return (philo);
 }
 
-int	mutex(t_share *data)
+int	mutex_fork_init(t_share *data)
 {
 	int		i;
 
 	i = 0;
-	t_philo *philo;
-	data->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!data->mutex)
-		return 0;
-	data->fork = malloc(sizeof(pthread_mutex_t) * philo->share->number_of_philosophers);
-	while (i < philo->share->number_of_philosophers)
+	data->fork = malloc(sizeof(pthread_mutex_t) * data->number_of_philosophers);
+	while (i < data->number_of_philosophers)
 	{
 		pthread_mutex_init(&data->fork[i], NULL);
 		i++;
@@ -57,42 +53,35 @@ int	mutex(t_share *data)
 
 void	*rout(void *data)
 {
-	t_philo *dat = (t_philo *)data;
-	pthread_mutex_lock(dat->right_fork);
-	printf("%d  take right fork\n", dat->id);
-	pthread_mutex_lock(dat->left_fork);
-	printf("%d take left fork\n", dat->id);
-	printf("%d eating\n", dat->id);
-	pthread_mutex_unlock(dat->right_fork);
-	pthread_mutex_unlock(dat->left_fork);
-	return NULL;
-}
+	t_philo *dat;
+	int		stop;
 
-void	thread_creation(t_philo *data, int res, int i)
-{
-	data->share->threads = malloc(sizeof(pthread_t) * data->share->number_of_philosophers);
-	if (data[i].id % 2 == res)
+	dat = (t_philo *)data;
+	dat->share->last_eat_time = dat->share->start_t;
+	stop = 0;
+	while (1)
 	{
-		pthread_create(&data->share->threads[i], NULL, &rout, &data->share->threads[i]);
+		tasks(dat);
 	}
-	usleep(20);
+	return (NULL);
 }
 
 int make_philo(t_philo *data)
 {
-	int		i;
+	int			i;
+	pthread_t	*threads;
 
 	i = 0;
+	data->share->start_t = ft_get_time();
 	while (i < data->share->number_of_philosophers)
 	{
-		thread_creation(data, 0, i);
+		pthread_create(&threads[i], NULL, &rout, &data[i]);
 		i++;
 	}
-	usleep(20);
 	i = 0;
 	while (i < data->share->number_of_philosophers)
 	{
-		thread_creation(data, 1, i);
+		pthread_join(threads[i], NULL);
 		i++;
 	}
 	return (0);
@@ -117,6 +106,7 @@ int main(int argc, char *argv[])
 		if (share->number_of_times_each_philosopher_must_eat == 0)
 			return (0);
 	}
+	mutex_fork_init(share);
 	philo = philo_init(share);
 	make_philo(philo);
 	return 0;

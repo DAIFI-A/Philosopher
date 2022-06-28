@@ -4,7 +4,7 @@ void	right_handed(t_philo *p)
 {
 	pthread_mutex_lock(p->right_fork);
 	pthread_mutex_lock(&p->share->mutex_msg);
-	printf("%s", "has taken a fork");
+	printf("%u %d %s\n",  ft_get_time() - p->share->start_t, p->id, "has taken a fork");
 	pthread_mutex_unlock(&p->share->mutex_msg);
 	if (p->share->number_of_philosophers == 1)
 	{
@@ -14,10 +14,10 @@ void	right_handed(t_philo *p)
 	}
 	pthread_mutex_lock(p->left_fork);
 	pthread_mutex_lock(&p->share->mutex_msg);
-	printf("%s", "has taken a fork");
+	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "has taken a fork");
 	pthread_mutex_unlock(&p->share->mutex_msg);
 	pthread_mutex_lock(&p->share->mutex_msg);
-	printf("%s", "is eating");
+	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "is eating");
 	pthread_mutex_unlock(&p->share->mutex_msg);
 	pthread_mutex_lock(&p->share->mutex_last_eat);
 	p->share->last_eat_time = ft_get_time();
@@ -31,7 +31,7 @@ void	left_handed(t_philo *p)
 {
 	pthread_mutex_lock(p->left_fork);
 	pthread_mutex_lock(&p->share->mutex_msg);
-	printf("%s\n", "has taken a fork");
+	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "has taken a fork");
 	pthread_mutex_unlock(&p->share->mutex_msg);
 	if (p->share->number_of_philosophers == 1)
 	{
@@ -41,10 +41,10 @@ void	left_handed(t_philo *p)
 	}
 	pthread_mutex_lock(p->right_fork);
 	pthread_mutex_lock(&p->share->mutex_msg);
-	printf("%s\n", "has taken a fork");
+	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "has taken a fork");
 	pthread_mutex_unlock(&p->share->mutex_msg);
 	pthread_mutex_lock(&p->share->mutex_msg);
-	printf("%s\n", "is eating");
+	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "is eating");
 	pthread_mutex_unlock(&p->share->mutex_msg);
 	pthread_mutex_lock(&p->share->mutex_last_eat);
 	p->share->last_eat_time = ft_get_time();
@@ -66,11 +66,11 @@ void	tasks(t_philo *philo)
 {
 	eat_task(philo);
 	pthread_mutex_lock(&philo->share->mutex_msg);
-	printf("%s\n", "is sleeping");
+	printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is sleeping");
 	pthread_mutex_unlock(&philo->share->mutex_msg);
 	ft_usleep(philo->share->time_to_sleep);
 	pthread_mutex_lock(&philo->share->mutex_msg);
-	printf("%s\n", "is thinking");
+	printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is thinking");
 	pthread_mutex_unlock(&philo->share->mutex_msg);
 	if (philo->share->number_of_philosophers % 2 != 0)
 		ft_usleep(100);

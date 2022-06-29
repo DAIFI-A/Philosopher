@@ -1,4 +1,4 @@
-SRCS =	check_args.c ft_atoi.c ft_isdigit.c philosopher.c utils.c tasks.c
+SRCS =	check_args.c ft_atoi.c ft_isdigit.c philosopher.c utils.c tasks.c check_death.c
 SRCDIR = mand
 OBJS_DIR = objs
 CC = gcc

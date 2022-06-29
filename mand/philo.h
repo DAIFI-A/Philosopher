@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/27 19:09:28 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/06/29 23:05:25 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct share
 	pthread_mutex_t	mutex_msg;
 	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	*fork;
+	pthread_t		death;
 }		t_share;
 
 typedef struct s_philo
@@ -40,6 +41,7 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	int				id;
 	long			last_meal;
+	int				flage;
 }		t_philo;
 
 void			over_flow(char **av);
@@ -49,6 +51,8 @@ void			tasks(t_philo *philo);
 void			right_handed(t_philo *p);
 void			left_handed(t_philo *p);
 void			eat_task(t_philo *philo);
+void			*check_death(void *arg);
+void			*rout(void *data);
 char			*ft_error(char **str);
 int				ft_isdigit(int a);
 int				is_digit(char **av);

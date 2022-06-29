@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/28 18:06:03 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/06/29 23:06:36 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"philo.h"
+#include <bits/pthreadtypes.h>
+#include <stdlib.h>
 
 
 t_philo *philo_init(t_share	*share)
@@ -22,6 +24,7 @@ t_philo *philo_init(t_share	*share)
 	philo = (t_philo *)malloc(sizeof(t_philo) * share->number_of_philosophers);
 	if (!philo)
 		return(NULL);
+	philo->flage = 0;
 	while (i < share->number_of_philosophers)
 	{
 		philo[i].share = share;
@@ -43,8 +46,8 @@ int	mutex_init(t_share *data)
 
 	i = 0;
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->number_of_philosophers);
-	// pthread_mutex_init(&data->mutex_msg, NULL);
-	// pthread_mutex_init(&data->mutex_last_eat, NULL);
+	pthread_mutex_init(&data->mutex_msg, NULL);
+	pthread_mutex_init(&data->mutex_last_eat, NULL);
 	while (i < data->number_of_philosophers)
 	{
 		pthread_mutex_init(&data->fork[i], NULL);
@@ -60,9 +63,12 @@ void	*rout(void *data)
 	dat = (t_philo *)data;
 	int i = 0;
 	dat->share->last_eat_time = dat->share->start_t;
+	pthread_create(&dat->share->death, NULL, &check_death, dat);
 	while(1)
 	{
 		tasks(dat);
+		if (dat->flage == 1)
+			break ;
 	}
 	return (NULL);
 }
@@ -95,7 +101,6 @@ int main(int argc, char *argv[])
 
 	share = (t_share *)malloc(sizeof(t_share));
 	share->start_t = ft_get_time();
-	printf("|%u|\n", share->start_t);
 	check_args(argc, argv);
 	share->number_of_philosophers = ft_atoi(argv[1]);
 	if (share->number_of_philosophers == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/01 19:22:37 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/01 20:28:53 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 			return (0);
 	}
 	else 
-		share->number_of_meals == -1;
+		share->number_of_meals = -1;
 	mutex_init(share);
 	philo = philo_init(share);
 	make_philo(philo);

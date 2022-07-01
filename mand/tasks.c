@@ -67,7 +67,7 @@ void	eat_task(t_philo *philo)
 void	tasks(t_philo *philo)
 {
 	eat_task(philo);
-	if (philo->share->number_of_meals != -1 && philo->count_meal == philo->share->number_of_meals)
+	if ((philo->share->number_of_meals != -1 && philo->count_meal == philo->share->number_of_meals) || philo->share->flage == 1)
 	{
 		pthread_mutex_lock(&philo->share->mutex_break);
 		philo->flage = 1;

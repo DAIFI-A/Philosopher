@@ -14,17 +14,17 @@ void	*check_death(void *arg)
 		{
 			pthread_mutex_unlock(&p->share->mutex_last_eat);
 			pthread_mutex_lock(&p->share->mutex_msg);
-			printf("%lu %d %s\n", ft_get_time() - p->share->start_t, p->id,"died");
-			pthread_mutex_unlock(&p->share->mutex_msg);
+			printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "died");
 			pthread_mutex_lock(&p->share->mutex_break);
             p->share->flage = 1;
 			pthread_mutex_unlock(&p->share->mutex_break);
+			pthread_mutex_unlock(&p->share->mutex_msg);
             return (NULL);
 		}
 		else
 			pthread_mutex_unlock(&p->share->mutex_last_eat);
 		pthread_mutex_lock(&p->share->mutex_break);
-            break_flage = p->flage + p->share->flage;
+        break_flage = p->flage + p->share->flage;
 		pthread_mutex_unlock(&p->share->mutex_break);
 	}
 	return (NULL);

@@ -19,6 +19,7 @@ void	right_handed(t_philo *p)
 	pthread_mutex_lock(&p->share->mutex_msg);
 	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "is eating");
 	pthread_mutex_unlock(&p->share->mutex_msg);
+	p->count_meal++;
 	pthread_mutex_lock(&p->share->mutex_last_eat);
 	p->share->last_eat_time = ft_get_time();
 	pthread_mutex_unlock(&p->share->mutex_last_eat);
@@ -46,6 +47,7 @@ void	left_handed(t_philo *p)
 	pthread_mutex_lock(&p->share->mutex_msg);
 	printf("%u %d %s\n", ft_get_time() - p->share->start_t, p->id, "is eating");
 	pthread_mutex_unlock(&p->share->mutex_msg);
+	p->count_meal++;
 	pthread_mutex_lock(&p->share->mutex_last_eat);
 	p->share->last_eat_time = ft_get_time();
 	pthread_mutex_unlock(&p->share->mutex_last_eat);
@@ -65,6 +67,13 @@ void	eat_task(t_philo *philo)
 void	tasks(t_philo *philo)
 {
 	eat_task(philo);
+	if (philo->share->number_of_meals != -1 && philo->count_meal == philo->share->number_of_meals)
+	{
+		pthread_mutex_lock(&philo->share->mutex_break);
+		philo->flage = 1;
+		pthread_mutex_unlock(&philo->share->mutex_break);
+		return ;
+	}
 	pthread_mutex_lock(&philo->share->mutex_msg);
 	printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is sleeping");
 	pthread_mutex_unlock(&philo->share->mutex_msg);

@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/29 23:05:25 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/01 19:19:52 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ typedef struct share
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_of_times_each_philosopher_must_eat;
+	int				number_of_meals;
+	int				flage;
 	unsigned int	start_t;
 	unsigned int	last_eat_time;
 	pthread_mutex_t	mutex_msg;
 	pthread_mutex_t	mutex_last_eat;
+	pthread_mutex_t	mutex_break;
 	pthread_mutex_t	*fork;
-	pthread_t		death;
 }		t_share;
 
 typedef struct s_philo
@@ -41,7 +42,10 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	int				id;
 	long			last_meal;
+	int				nbr_meals;
 	int				flage;
+	int				count_meal;
+	pthread_t		death;
 }		t_philo;
 
 void			over_flow(char **av);

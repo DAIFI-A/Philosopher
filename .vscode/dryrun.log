@@ -1,9 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory '/home/mck-d/Desktop/philo2'
-gcc -c mand/philosopher.c -o objs/philosopher.o
-gcc -c mand/utils.c -o objs/utils.o
-gcc -c mand/tasks.c -o objs/tasks.o
-gcc -c mand/check_death.c -o objs/check_death.o
-gcc -fsanitize=address -Wall -Wextra -Werror objs/check_args.o objs/ft_atoi.o objs/ft_isdigit.o objs/philosopher.o objs/utils.o objs/tasks.o objs/check_death.o -o philo
-make: Leaving directory '/home/mck-d/Desktop/philo2'
- 

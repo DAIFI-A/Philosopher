@@ -1,5 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/adaifi/Desktop/philo2'
+make: Entering directory `/Users/adaifi/Desktop/philo3'
 mkdir objs
 gcc -c mand/check_args.c -o objs/check_args.o
 gcc -c mand/ft_atoi.c -o objs/ft_atoi.o
@@ -9,5 +9,5 @@ gcc -c mand/utils.c -o objs/utils.o
 gcc -c mand/tasks.c -o objs/tasks.o
 gcc -c mand/check_death.c -o objs/check_death.o
 gcc -Wall -Wextra -Werror objs/check_args.o objs/ft_atoi.o objs/ft_isdigit.o objs/philosopher.o objs/utils.o objs/tasks.o objs/check_death.o -o philo
-make: Leaving directory `/Users/adaifi/Desktop/philo2'
+make: Leaving directory `/Users/adaifi/Desktop/philo3'
  

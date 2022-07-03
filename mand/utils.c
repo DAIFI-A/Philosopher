@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:43:27 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/27 17:00:12 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/03 02:46:32 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ft_usleep(unsigned int time_in_ms)
 
 	start_time = ft_get_time();
 	while ((ft_get_time() - start_time) < time_in_ms)
-		usleep(time_in_ms / 10);
+		usleep(time_in_ms * 1000);
 }

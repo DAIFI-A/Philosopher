@@ -67,20 +67,26 @@ void	eat_task(t_philo *philo)
 void	tasks(t_philo *philo)
 {
 	eat_task(philo);
-	if ((philo->share->number_of_meals != -1 && philo->count_meal == philo->share->number_of_meals) || philo->share->flage == 1)
+	printf("%d\n", philo->share->flage);
+	if ((philo->share->number_of_meals != -1 && philo->count_meal == philo->share->number_of_meals))
 	{
 		pthread_mutex_lock(&philo->share->mutex_break);
 		philo->flage = 1;
 		pthread_mutex_unlock(&philo->share->mutex_break);
-		return ;
+		printf("%d\n", philo->flage);
 	}
-	pthread_mutex_lock(&philo->share->mutex_msg);
-	printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is sleeping");
-	pthread_mutex_unlock(&philo->share->mutex_msg);
-	ft_usleep(philo->share->time_to_sleep);
-	pthread_mutex_lock(&philo->share->mutex_msg);
-	printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is thinking");
-	pthread_mutex_unlock(&philo->share->mutex_msg);
-	if (philo->share->number_of_philosophers % 2 != 0)
-		ft_usleep(100);
+	if (!philo->share->flage)
+	{
+		pthread_mutex_lock(&philo->share->mutex_msg);
+		printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is sleeping");
+		pthread_mutex_unlock(&philo->share->mutex_msg);
+			// pthread_mutex_lock(&philo->share->mutex_break);
+		ft_usleep(philo->share->time_to_sleep);
+			// pthread_mutex_unlock(&philo->share->mutex_break);
+		pthread_mutex_lock(&philo->share->mutex_msg);
+		printf("%u %d %s\n", ft_get_time() - philo->share->start_t, philo->id, "is thinking");
+		pthread_mutex_unlock(&philo->share->mutex_msg);
+		if (philo->share->number_of_philosophers % 2 != 0)
+			ft_usleep(100);
+	}
 }

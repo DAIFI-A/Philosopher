@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/01 20:28:53 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/07/03 02:43:03 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,25 @@ int	mutex_init(t_share *data)
 void	*rout(void *data)
 {
 	t_philo *dat;
-	int break_flage;
 
 	dat = (t_philo *)data;
-	break_flage = 0;
 	dat->share->last_eat_time = dat->share->start_t;
-	pthread_create(&dat->death, NULL, &check_death, dat);
-	while(!break_flage)
+	// if (pthread_create(&dat->death, NULL, &check_death, dat) != 0)
+	// 	perror("failed to create thread");
+	while(!(dat->share->flage))
 	{
 		tasks(dat);
-		pthread_mutex_lock(&dat->share->mutex_break);
-		break_flage = dat->share->flage + dat->flage;
-		pthread_mutex_unlock(&dat->share->mutex_break);
+		// printf("%d\n", dat->share->flage);
+		// pthread_mutex_lock(&dat->share->mutex_break);
+		// if (dat->share->flage == 1 || dat->flage == 1)
+		// {
+		// 	pthread_mutex_unlock(&dat->share->mutex_break);
+		// 	break ;
+		// }
+		// pthread_mutex_unlock(&dat->share->mutex_break);
+		// break_flage = dat->share->flage + dat->flage;
 	}
-	pthread_join(dat->death, NULL);
+	// pthread_join(dat->death, NULL);
 	return (NULL);
 }
 
@@ -89,12 +94,12 @@ int make_philo(t_philo *data)
 		pthread_create(&threads[i], NULL, &rout, &data[i]);
 		i++;
 	}
-	i = 0;
-	while (i < data->share->number_of_philosophers)
-	{
-		pthread_join(threads[i], NULL);
-		i++;
-	}
+	// i = 0;
+	// while (i < data->share->number_of_philosophers)
+	// {
+	// 	pthread_join(threads[i], NULL);
+	// 	i++;
+	// }
 	return (0);
 }
 
@@ -124,10 +129,11 @@ int main(int argc, char *argv[])
 	mutex_init(share);
 	philo = philo_init(share);
 	make_philo(philo);
-	pthread_mutex_destroy(&share->mutex_msg);
-	pthread_mutex_destroy(&share->mutex_last_eat);
-	pthread_mutex_destroy(&share->mutex_break);
-	free(share);
-	free(philo);
+	check_death(philo);
+	// pthread_mutex_destroy(&share->mutex_msg);
+	// pthread_mutex_destroy(&share->mutex_last_eat);
+	// pthread_mutex_destroy(&share->mutex_break);
+	// free(share);
+	// free(philo);
 	return 0;
 }

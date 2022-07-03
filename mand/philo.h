@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/01 19:19:52 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/03 02:39:53 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			tasks(t_philo *philo);
 void			right_handed(t_philo *p);
 void			left_handed(t_philo *p);
 void			eat_task(t_philo *philo);
-void			*check_death(void *arg);
+void			check_death(t_philo	*p);
 void			*rout(void *data);
 char			*ft_error(char **str);
 int				ft_isdigit(int a);

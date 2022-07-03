@@ -1,7 +1,7 @@
-make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/adaifi/Desktop/philo2'
 mkdir objs
 gcc -c mand/check_args.c -o objs/check_args.o
+ 
 gcc -c mand/ft_atoi.c -o objs/ft_atoi.o
 gcc -c mand/ft_isdigit.c -o objs/ft_isdigit.o
 gcc -c mand/philosopher.c -o objs/philosopher.o

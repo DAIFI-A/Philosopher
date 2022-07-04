@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:43:27 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/27 17:00:12 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/04 22:25:05 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,20 @@ void	ft_usleep(unsigned int time_in_ms)
 	start_time = ft_get_time();
 	while ((ft_get_time() - start_time) < time_in_ms)
 		usleep(time_in_ms / 10);
+}
+
+void	print_status(t_philo *p, unsigned int time, char *status)
+{
+	int		len;
+
+	pthread_mutex_lock(&p->share->mutex_break);
+	if (p->share->flage == 1)
+	{
+		pthread_mutex_unlock(&p->share->mutex_break);
+		return ;
+	}
+	if (!strcmp(status, "died"))
+		p->share->flage = 1;
+	pthread_mutex_unlock(&p->share->mutex_break);
+	printf("%u %u %s", time, p->id, status);
 }

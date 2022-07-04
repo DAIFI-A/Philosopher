@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/03 21:33:18 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/07/04 22:25:17 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include<stdio.h>
 # include<stdlib.h>
 # include<sys/time.h>
+# include<string.h>
 
 typedef struct share
 {
@@ -45,10 +46,6 @@ typedef struct s_philo
 	int				nbr_meals;
 	int				flage;
 	int				count_meal;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				number_of_meals;
 	pthread_t		death;
 }		t_philo;
 
@@ -61,6 +58,7 @@ void			left_handed(t_philo *p);
 void			eat_task(t_philo *philo);
 void			*check_death(void *arg);
 void			*rout(void *data);
+void			print_status(t_philo *p, unsigned int time, char *status);
 char			*ft_error(char **str);
 int				ft_isdigit(int a);
 int				is_digit(char **av);
@@ -70,6 +68,5 @@ int 			passing_args(int ac, char **argv);
 int 			make_philo(t_philo *data);
 unsigned int	ft_get_time(void);
 t_philo 		*philo_init(t_share *share);
-int				is_dead(t_philo *p);
 
 #endif

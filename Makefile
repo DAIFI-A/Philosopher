@@ -19,7 +19,7 @@ $(OBJS_DIR)/%.o: $(SRCDIR)/%.c $(INC) | $(OBJS_DIR)
 			$(CC) -c $< -o $@
 
 $(NAME): $(OBJS)
-			$(CC) $(CFLAGS) $^ -o $(NAME)
+			$(CC) -fsanitize=address $(CFLAGS) $^ -o $(NAME)
 
 clean:
 			@rm -rf $(OBJS_DIR) ${OBJS_BON}

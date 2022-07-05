@@ -72,7 +72,7 @@ void	tasks(t_philo *p)
 		pthread_mutex_lock(&p->share->mutex_break);
 		p->flage = 1;
 		pthread_mutex_unlock(&p->share->mutex_break);
-		return ;
+		//return ;
 	}
 	pthread_mutex_lock(&p->share->mutex_msg);
 	print_status(p, ft_get_time() - p->share->start_t, "is sleeping\n");

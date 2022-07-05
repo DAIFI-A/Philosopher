@@ -49,11 +49,11 @@ int	thread_init(t_philo *p)
 	int			i;
 	sem_t		*mutex;
 
-	i = 0;
+	i = -1;
 	sem_unlink("mutex");
 	//puts("yo");
 	mutex = sem_open("mutex", O_CREAT, 777, p->share->number_of_philosophers);
-	while (i++ < p->share->number_of_philosophers)
+	while (++i < p->share->number_of_philosophers)
 	{
 		p[i].process = fork();
 		//("%d\n", p[i].process_id);
@@ -61,27 +61,27 @@ int	thread_init(t_philo *p)
 			exit(0);
 		else if (p[i].process == 0)
 			create_thread(&p[i], mutex);
-		i++;
 	}
 	return (0);
 }
 
-void	check_p(t_philo *philo, t_share *share)
+void	check_stat(t_philo *philo, t_share *share)
 {
 	int	i;
 	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < share->number_of_philosophers)
 	{
 		waitpid(-1, &status, 0);
-		if (status == 0)
+		if (status != 0)
 		{
 			i = 0;
-			//printf("%u %d died\n", ft_get_time() -  philo->share->start_t, philo->process_id);
+			printf("%u %d died\n", ft_get_time() -  philo->share->start_t, philo->process_id);
 			while (i < share->number_of_philosophers)
 			{
-				kill(philo->process, SIGKILL);
+				kill(philo[i].process, SIGKILL);
 				i++;
 			}
 			exit (0);
@@ -118,6 +118,6 @@ int	main(int ac, char *av[])
 		share->number_of_meals = -1;
 	philo = philo_init(share);
 	thread_init(philo);
-	check_p(philo, share);
+	check_stat(philo, share);
 	return (0);
 }

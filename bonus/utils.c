@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:43:27 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/05 16:07:11 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/07/05 17:20:44 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	print_status(t_philo *p, unsigned int time, char *status)
 		return ;
 	}
 	if (!strcmp(status, "died\n"))
+	{
 		p->share->flage = 1;
+		exit(1);
+	}
 	printf("%u %u %s", time, p->process_id, status);
 	pthread_mutex_unlock(&p->share->mutex_break);
 }

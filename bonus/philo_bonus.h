@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/05 16:43:37 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/07/05 17:59:54 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void			*check_death(void *arg);
 void			print_status(t_philo *p, unsigned int time, char *status);
 void			routine(t_philo *philo, sem_t *mutex);
 void			create_thread(t_philo *philo, sem_t *mutex);
+void			check_stat(t_philo *philo, t_share *share);
 char			*ft_error(char **str);
 int				thread_init(t_philo *p);
 int				ft_isdigit(int a);

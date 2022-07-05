@@ -10,7 +10,7 @@ void	*check_death(void *arg)
 	while (!stop)
 	{
 		pthread_mutex_lock(&p->share->mutex_last_eat);
-		if (ft_get_time() - p->last_eat_time >= p->time_to_die)
+		if (ft_get_time() - p->last_eat_time > p->time_to_die)
 		{
 			pthread_mutex_unlock(&p->share->mutex_last_eat);
 			pthread_mutex_lock(&p->share->mutex_msg);

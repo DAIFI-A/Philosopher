@@ -7,11 +7,17 @@ void	*check_death(void *arg)
 
 	p = (t_philo *)arg;
 	stop = 0;
-	while (!stop)
+	while (1)
 	{
+		if (p->share->number_of_meals != -1 && p->count_meal == p->nbr_meals)
+		{
+			p->share->flage = 1;
+			p->flage = 1;
+			return (0);
+		}
 		if (ft_get_time() - p->last_eat_time >= p->time_to_die)
-			print_status(p, ft_get_time() - p->share->start_t, "died\n");
-        stop = p->flage + p->share->flage;
+			exit(1);
+		usleep(500);
 	}
-	return (NULL);
+	return (0);
 }

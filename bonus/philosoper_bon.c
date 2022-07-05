@@ -15,7 +15,7 @@ t_philo *philo_init(t_share	*share)
 		philo[i].share = share;
 		philo[i].n = share->number_of_philosophers;
 		philo[i].id = i + 1;
-		philo[i].last_meal = -1;
+		//philo[i].last_eat_time = ft_get_time();
 		philo[i].flage = 0;
 		philo[i].count_meal = 0;
 		philo[i].nbr_meals = share->number_of_meals;
@@ -35,12 +35,13 @@ void	routine(t_philo *philo, sem_t *mutex)
 
 void	create_thread(t_philo *philo, sem_t *mutex)
 {
-	philo->last_eat_time = ft_get_time();
-	pthread_create(&(philo->death), NULL, &check_death, &philo);
+	philo->share->start_t = ft_get_time();
+	philo->last_eat_time = philo->share->start_t;
+	pthread_create(&philo->death, NULL, &check_death, philo);
 	while (!philo->share->flage)
 		routine(philo, mutex);
 	if (philo->flage == 1)
-		exit(1);
+		exit(0);
 	exit(0);
 }
 
@@ -51,12 +52,10 @@ int	thread_init(t_philo *p)
 
 	i = -1;
 	sem_unlink("mutex");
-	//puts("yo");
-	mutex = sem_open("mutex", O_CREAT, 777, p->share->number_of_philosophers);
+	mutex = sem_open("mutex", O_CREAT, 666, p->share->number_of_philosophers);
 	while (++i < p->share->number_of_philosophers)
 	{
 		p[i].process = fork();
-		//("%d\n", p[i].process_id);
 		if (p[i].process < 0)
 			exit(0);
 		else if (p[i].process == 0)
@@ -71,20 +70,20 @@ void	check_stat(t_philo *philo, t_share *share)
 	int	status;
 
 	i = 0;
-	status = 0;
+	status = -1;
 	while (i < share->number_of_philosophers)
 	{
 		waitpid(-1, &status, 0);
-		if (status != 0)
+		if (status == 0)
 		{
 			i = 0;
-			printf("%u %d died\n", ft_get_time() -  philo->share->start_t, philo->process_id);
 			while (i < share->number_of_philosophers)
 			{
 				kill(philo[i].process, SIGKILL);
 				i++;
 			}
-			exit (0);
+			printf("%u %d died\n", ft_get_time() -  philo->share->start_t, philo->process_id);
+			exit(0);
 		}
 		i++;
 	}
@@ -100,7 +99,6 @@ int	main(int ac, char *av[])
 		return (write(1, "ERROR\n", 6));
 	share = (t_share *)malloc(sizeof(t_share));
 	check_args(ac, av);
-	share->start_t = ft_get_time();
 	share->flage = 0;
 	share->number_of_philosophers = ft_atoi(av[1]);
 	if (share->number_of_philosophers == 0)
@@ -119,5 +117,6 @@ int	main(int ac, char *av[])
 	philo = philo_init(share);
 	thread_init(philo);
 	check_stat(philo, share);
+	sem_unlink("mutex");
 	return (0);
 }

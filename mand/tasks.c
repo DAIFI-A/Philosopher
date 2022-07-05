@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tasks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/05 22:40:41 by adaifi            #+#    #+#             */
+/*   Updated: 2022/07/05 22:58:17 by adaifi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	right_handed(t_philo *p)
@@ -67,12 +79,12 @@ void	eat_task(t_philo *p)
 void	tasks(t_philo *p)
 {
 	eat_task(p);
-	if (p->share->number_of_meals != -1 && p->count_meal == p->share->number_of_meals)
+	if (p->share->number_of_meals != -1 && \
+	p->count_meal == p->nbr_meals)
 	{
 		pthread_mutex_lock(&p->share->mutex_break);
 		p->flage = 1;
 		pthread_mutex_unlock(&p->share->mutex_break);
-		//return ;
 	}
 	pthread_mutex_lock(&p->share->mutex_msg);
 	print_status(p, ft_get_time() - p->share->start_t, "is sleeping\n");

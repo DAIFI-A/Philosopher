@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adaifi <adaifi@student.42lyon.fr>          +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:44:49 by adaifi            #+#    #+#             */
-/*   Updated: 2022/06/22 01:36:27 by adaifi           ###   ########lyon.fr   */
+/*   Updated: 2022/07/05 22:43:14 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"philo.h"
 
-void	over_flow(char **av)
+int	over_flow(char **av)
 {
 	int		i;
 	int		j;
@@ -33,10 +33,11 @@ void	over_flow(char **av)
 				n++;
 			}
 			if (n > 10)
-				ft_error(av);
+				return (ft_error(av));
 		}
 		i++;
 	}
+	return (1);
 }
 
 int	is_digit(char	**av)
@@ -50,7 +51,8 @@ int	is_digit(char	**av)
 		j = 0;
 		while (av[i][j])
 		{
-			if (ft_isdigit(av[i][j]) == 0 || ft_atoi(av[i]) > 2147483647 || ft_atoi(av[i]) < 0)
+			if (ft_isdigit(av[i][j]) == 0 || ft_atoi(av[i]) > 2147483647 \
+			|| ft_atoi(av[i]) < 0)
 				return (0);
 			j++;
 		}
@@ -59,14 +61,16 @@ int	is_digit(char	**av)
 	return (1);
 }
 
-void	check_args(int ac, char **argv)
+int	check_args(int ac, char **argv)
 {
 	char	*str;
 	int		i;
 
 	if (ac < 5 || ac > 6)
-		ft_error(argv);
-	over_flow(argv);
+		return (ft_error(argv));
+	if (over_flow(argv) == 0)
+		return (0);
 	if (!is_digit(argv))
-		ft_error(argv);
+		return (ft_error(argv));
+	return (1);
 }

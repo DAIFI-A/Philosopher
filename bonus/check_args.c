@@ -6,7 +6,7 @@
 /*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:44:49 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/05 05:25:54 by adaifi           ###   ########.fr       */
+/*   Updated: 2022/07/05 22:04:56 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	is_digit(char	**av)
 	return (1);
 }
 
-void	check_args(int ac, char **argv)
+int	check_args(int ac, char **argv)
 {
 	char	*str;
 	int		i;

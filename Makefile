@@ -1,4 +1,4 @@
-SRCS =	check_args.c ft_atoi.c ft_isdigit.c philosopher.c utils.c tasks.c check_death.c
+SRCS =	check_args.c ft_atoi.c ft_isdigit.c philosopher.c utils.c tasks.c check_death.c threads.c
 SRCDIR = mand
 OBJS_DIR = objs
 CC = gcc
@@ -19,7 +19,7 @@ $(OBJS_DIR)/%.o: $(SRCDIR)/%.c $(INC) | $(OBJS_DIR)
 			$(CC) -c $< -o $@
 
 $(NAME): $(OBJS)
-			$(CC) -fsanitize=address $(CFLAGS) $^ -o $(NAME)
+			$(CC) $(CFLAGS) $^ -o $(NAME)
 
 clean:
 			@rm -rf $(OBJS_DIR) ${OBJS_BON}

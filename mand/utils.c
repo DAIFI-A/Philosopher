@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
+/*   By: adaifi <adaifi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:43:27 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/05 01:21:50 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/05 22:45:31 by adaifi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"philo.h"
 
-char	*ft_error(char **str)
+int	ft_error(char **str)
 {
 	write(2, "Error\n", 7);
-	exit(1);
+	return (0);
 }
 
 unsigned int	ft_get_time(void)

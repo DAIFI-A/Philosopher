@@ -10,13 +10,12 @@ void	*check_death(void *arg)
 	while (!stop)
 	{
 		pthread_mutex_lock(&p->share->mutex_last_eat);
-		if (!p->share->flage && ft_get_time() - p->share->last_eat_time > p->share->time_to_die)
+		if (!p->share->flage && ft_get_time() - p->share->last_eat_time >= p->share->time_to_die)
 		{
 			pthread_mutex_unlock(&p->share->mutex_last_eat);
 			pthread_mutex_lock(&p->share->mutex_msg);
 			print_status(p, ft_get_time() - p->share->start_t, "died\n");
 			pthread_mutex_unlock(&p->share->mutex_msg);
-            return (NULL);
 		}
 		else
 			pthread_mutex_unlock(&p->share->mutex_last_eat);

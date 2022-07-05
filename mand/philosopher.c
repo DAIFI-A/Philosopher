@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/04 22:50:51 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/05 01:57:33 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ t_philo *philo_init(t_share	*share)
 		philo[i].flage = 0;
 		philo[i].count_meal = 0;
 		philo[i].nbr_meals = share->number_of_meals;
+		philo[i].time_to_die = share->time_to_die;
+		philo[i].time_to_eat = share->time_to_eat;
+		philo[i].time_to_sleep = share->time_to_sleep;
+		philo[i].last_eat_time = share->last_eat_time;
 		philo[i].right_fork = &(share->fork[i]);
 		if (i + 1 == share->number_of_philosophers)
 			philo[i].left_fork = &(share->fork[0]);
@@ -68,10 +72,10 @@ void	*rout(void *data)
 	break_flage = 0;
 	while(!break_flage)
 	{
+		tasks(dat);
 		pthread_mutex_lock(&dat->share->mutex_break);
 		break_flage = dat->share->flage + dat->flage;
 		pthread_mutex_unlock(&dat->share->mutex_break);
-		tasks(dat);
 	}
 	pthread_join(dat->death, NULL);
 	return (NULL);
@@ -120,7 +124,7 @@ int main(int argc, char *argv[])
 			return (0);
 	}
 	else 
-		share->number_of_meals == -1;
+		share->number_of_meals = -1;
 	mutex_init(share);
 	philo = philo_init(share);
 	make_philo(philo);

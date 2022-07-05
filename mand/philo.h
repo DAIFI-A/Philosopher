@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 23:45:29 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/04 22:25:17 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/05 01:57:06 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,15 @@ typedef struct s_philo
 	t_share			*share;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	int				id;
 	long			last_meal;
+	int				id;
 	int				nbr_meals;
 	int				flage;
 	int				count_meal;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	unsigned int	last_eat_time;
 	pthread_t		death;
 }		t_philo;
 

@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:43:27 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/04 22:25:05 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/05 01:21:50 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	print_status(t_philo *p, unsigned int time, char *status)
 		pthread_mutex_unlock(&p->share->mutex_break);
 		return ;
 	}
-	if (!strcmp(status, "died"))
+	if (!strcmp(status, "died\n"))
 		p->share->flage = 1;
-	pthread_mutex_unlock(&p->share->mutex_break);
 	printf("%u %u %s", time, p->id, status);
+	pthread_mutex_unlock(&p->share->mutex_break);
 }

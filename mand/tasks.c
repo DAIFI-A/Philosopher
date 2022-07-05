@@ -6,7 +6,7 @@ void	right_handed(t_philo *p)
 	pthread_mutex_lock(&p->share->mutex_msg);
 	print_status(p, ft_get_time() - p->share->start_t, "has taken a fork\n");
 	pthread_mutex_unlock(&p->share->mutex_msg);
-	if (p->share->number_of_philosophers == 1)
+	if (p->n == 1)
 	{
 		pthread_mutex_unlock(p->right_fork);
 		ft_usleep(p->time_to_die);
@@ -34,7 +34,7 @@ void	left_handed(t_philo *p)
 	pthread_mutex_lock(&p->share->mutex_msg);
 	print_status(p, ft_get_time() - p->share->start_t, "has taken a fork\n");
 	pthread_mutex_unlock(&p->share->mutex_msg);
-	if (p->share->number_of_philosophers == 1)
+	if (p->n == 1)
 	{
 		pthread_mutex_unlock(p->left_fork);
 		ft_usleep(p->time_to_die);
@@ -81,6 +81,6 @@ void	tasks(t_philo *p)
 	pthread_mutex_lock(&p->share->mutex_msg);
 	print_status(p, ft_get_time() - p->share->start_t, "is thinking\n");
 	pthread_mutex_unlock(&p->share->mutex_msg);
-	if (p->share->number_of_philosophers % 2 != 0)
+	if (p->n % 2 != 0)
 		ft_usleep(100);
 }

@@ -6,7 +6,7 @@
 /*   By: mck-d <mck-d@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 00:45:52 by adaifi            #+#    #+#             */
-/*   Updated: 2022/07/05 01:57:33 by mck-d            ###   ########.fr       */
+/*   Updated: 2022/07/05 02:53:39 by mck-d            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_philo *philo_init(t_share	*share)
 	while (i < share->number_of_philosophers)
 	{
 		philo[i].share = share;
+		philo[i].n = share->number_of_philosophers;
 		philo[i].id = i + 1;
 		philo[i].last_meal = -1;
 		philo[i].flage = 0;
@@ -33,7 +34,6 @@ t_philo *philo_init(t_share	*share)
 		philo[i].time_to_die = share->time_to_die;
 		philo[i].time_to_eat = share->time_to_eat;
 		philo[i].time_to_sleep = share->time_to_sleep;
-		philo[i].last_eat_time = share->last_eat_time;
 		philo[i].right_fork = &(share->fork[i]);
 		if (i + 1 == share->number_of_philosophers)
 			philo[i].left_fork = &(share->fork[0]);
@@ -67,7 +67,7 @@ void	*rout(void *data)
 	int break_flage;
 
 	dat = (t_philo *)data;
-	dat->share->last_eat_time = dat->share->start_t;
+	dat->last_eat_time = dat->share->start_t;
 	pthread_create(&dat->death, NULL, &check_death, dat);
 	break_flage = 0;
 	while(!break_flage)
